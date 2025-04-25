@@ -18,7 +18,7 @@ if exist "%fichier_tri%" del "%fichier_tri%"
 
 
 
-rem on cherche dans la première partie de la ligne avant la virgule (nomFichier)
+rem On cherche dans la première partie de la ligne avant la virgule (nomFichier)
 rem token sert a séparer la ligne en plusieurs parties avec la délimitation donnée après ici delims = virgule  ((V-C. Les boucles de recherche))
 rem %%A = nom du fichier extrait
 rem %%B = lien de telechargement du fichier extrait 
@@ -84,9 +84,9 @@ if not exist "!nomFichier!" (
 	echo donc de la dalle !X!_!Y!
     curl -x http://proxy.culture.fr:8000 -O !url!  
 ) else (
-    echo Fichier deja telechargee: !nomFichier!
+    echo Fichier deja telecharge: !nomFichier!
 )	
-echo fin de téléchargement	
+echo fin du téléchargement	
 
 
 
