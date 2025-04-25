@@ -60,7 +60,7 @@ rem echo %fichier_tri% fini de trier
 
 rem ------ Traitement des dalles -------
 
-rem même boucle qu'au dessus pour les telecharger mais j'ai voulu bien séparer
+rem Même boucle qu'au dessus pour les telecharger mais j'ai voulu bien séparer
 
 set /a numDalle=0
 
