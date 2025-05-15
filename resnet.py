@@ -17,19 +17,21 @@ def main():
     train_loader = torch.utils.data.DataLoader(train_data, batch_size=16, shuffle=True, num_workers=4)
     test_loader = torch.utils.data.DataLoader(test_data, batch_size=16, shuffle=False, num_workers=4)
 
+    print(f"Nombre de classes: {len(train_data.classes)}") 
+    print(f"Classes: {train_data.classes}") 
+    print(f"Nombre d'échantillons d'entraînement: {len(train_data)}") 
+    print(f"Nombre d'échantillons de test: {len(test_data)}")
 
     model = resnet50(weights=torchvision.models.ResNet50_Weights.DEFAULT)
     num_features = model.fc.in_features
     model.fc = nn.Linear(num_features, len(train_data.classes))
 
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.0001)
+    optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
-
-    
 
     # Define the number of epochs
     num_epochs = 10
