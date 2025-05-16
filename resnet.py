@@ -7,6 +7,13 @@ import torch.nn as nn
 import torch.optim as optim
 from torchvision.models import resnet50
 
+# conda install scikit-learn
+from sklearn.metrics import classification_report
+
+from sklearn.metrics import confusion_matrix
+import seaborn as sns # conda install seaborn
+import matplotlib.pyplot as plt
+
 def main():
     transform = transforms.Compose([transforms.ToTensor(),
                                     transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
@@ -14,8 +21,8 @@ def main():
     test_data = torchvision.datasets.ImageFolder(root="test/", transform=transform)
 
     # Define the dataloaders
-    train_loader = torch.utils.data.DataLoader(train_data, batch_size=32, shuffle=True, num_workers=10)
-    test_loader = torch.utils.data.DataLoader(test_data, batch_size=32, shuffle=False, num_workers=10)
+    train_loader = torch.utils.data.DataLoader(train_data, batch_size=16, shuffle=True, num_workers=2)
+    test_loader = torch.utils.data.DataLoader(test_data, batch_size=16, shuffle=False, num_workers=2)
 
     print(f"Nombre de classes: {len(train_data.classes)}") 
     print(f"Classes: {train_data.classes}") 
@@ -34,7 +41,7 @@ def main():
     model = model.to(device)
 
     # Define the number of epochs
-    num_epochs = 10
+    num_epochs = 2
 
     # Train the model
     for epoch in range(num_epochs):
@@ -89,6 +96,17 @@ def main():
         test_loss /= len(test_data)
         test_acc = test_acc.double() / len(test_data)
         print(f"Epoch [{epoch + 1}/{num_epochs}] Train Loss: {train_loss:.4f} Test Loss: {test_loss:.4f} Test Acc: {test_acc:.4f}")
+
+    # Print classification report and confusion matrix after training
+    class_names = train_data.classes
+    print(classification_report(all_labels, all_preds, target_names=class_names))
+
+    cm = confusion_matrix(all_labels, all_preds)
+    sns.heatmap(cm, annot=True, fmt='d', xticklabels=class_names, yticklabels=class_names)
+    plt.xlabel('Predicted')
+    plt.ylabel('Actual')
+    plt.title('Confusion Matrix')
+    plt.show()
 
 if __name__ == '__main__':
     main()
