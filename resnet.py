@@ -74,6 +74,10 @@ def main():
         model.eval()
         test_loss = 0.0
         test_acc = 0.0
+
+        all_labels = []  # Initialize the list to store all labels
+        all_preds = []   # Initialize the list to store all predictions
+
         with torch.no_grad():
             for i, (inputs, labels) in enumerate(test_loader):
                 # Move the data to the device
@@ -89,7 +93,10 @@ def main():
                 _, preds = torch.max(outputs, 1)
                 test_acc += torch.sum(preds == labels.data)
 
-        
+                # Append the labels and predictions to the lists
+                all_labels.extend(labels.cpu().numpy())  # Move labels to CPU and convert to numpy
+                all_preds.extend(preds.cpu().numpy())    # Move preds to CPU and convert to numpy
+
 
         # Print the training and test loss and accuracy
         train_loss /= len(train_data)
