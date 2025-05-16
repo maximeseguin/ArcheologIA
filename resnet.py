@@ -14,8 +14,8 @@ def main():
     test_data = torchvision.datasets.ImageFolder(root="test/", transform=transform)
 
     # Define the dataloaders
-    train_loader = torch.utils.data.DataLoader(train_data, batch_size=16, shuffle=True, num_workers=4)
-    test_loader = torch.utils.data.DataLoader(test_data, batch_size=16, shuffle=False, num_workers=4)
+    train_loader = torch.utils.data.DataLoader(train_data, batch_size=32, shuffle=True, num_workers=10)
+    test_loader = torch.utils.data.DataLoader(test_data, batch_size=32, shuffle=False, num_workers=10)
 
     print(f"Nombre de classes: {len(train_data.classes)}") 
     print(f"Classes: {train_data.classes}") 
@@ -27,7 +27,7 @@ def main():
     model.fc = nn.Linear(num_features, len(train_data.classes))
 
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=0.00001)
 
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
