@@ -21,8 +21,8 @@ def main():
     test_data = torchvision.datasets.ImageFolder(root="test/", transform=transform)
 
     # Define the dataloaders
-    train_loader = torch.utils.data.DataLoader(train_data, batch_size=16, shuffle=True, num_workers=2)
-    test_loader = torch.utils.data.DataLoader(test_data, batch_size=16, shuffle=False, num_workers=2)
+    train_loader = torch.utils.data.DataLoader(train_data, batch_size=32, shuffle=True, num_workers=10)
+    test_loader = torch.utils.data.DataLoader(test_data, batch_size=32, shuffle=False, num_workers=10)
 
     print(f"Nombre de classes: {len(train_data.classes)}") 
     print(f"Classes: {train_data.classes}") 
@@ -41,7 +41,7 @@ def main():
     model = model.to(device)
 
     # Define the number of epochs
-    num_epochs = 2
+    num_epochs = 10
 
     # Train the model
     for epoch in range(num_epochs):
@@ -114,6 +114,10 @@ def main():
     plt.ylabel('Actual')
     plt.title('Confusion Matrix')
     plt.show()
+
+     # Sauvegarder le modèle entraîné
+    torch.save(model.state_dict(), "resnet50_trained.pth")
+    print("Modèle sauvegardé")
 
 if __name__ == '__main__':
     main()
